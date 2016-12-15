@@ -2,7 +2,9 @@ package com.grutschus.pong;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -23,8 +25,9 @@ public class GameManager extends Actor {
     private boolean[] isPressed = new boolean[256];
     private Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
     private Label counter = new Label("0:0", skin);
-    private Label ballVelocity = new Label("Ball Velocity: ", skin);
-    private float friction = 35;
+    private float friction = 20;
+    private float curvatureConstant = 10;
+    private Sprite background;
 
     public GameManager() {
         players = new Group();
@@ -32,6 +35,10 @@ public class GameManager extends Actor {
         uiElements = new Group();
         addUiElement(new Table(skin), "rootTable");
         addUiElement(counter, "counter");
+
+        background = new Sprite(new Texture(REFERENCE.TEXTURES.BACKGROUND));
+        background.setSize(REFERENCE.GAME_WORLD_WIDTH, REFERENCE.GAME_WORLD_HEIGHT);
+        background.setPosition(0, 0);
 
         initInputListener();
         addListener(inputListener);
@@ -45,13 +52,12 @@ public class GameManager extends Actor {
         getRootTable().top();
         getRootTable().add(counter);
         getRootTable().row();
-        getRootTable().add(ballVelocity);
         counter.setFontScale(2);
-        ballVelocity.setFontScale(2);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        background.draw(batch);
         players.draw(batch, parentAlpha);
         balls.draw(batch, parentAlpha);
     }
@@ -63,8 +69,6 @@ public class GameManager extends Actor {
         moveComputerPlayers(delta);
         players.act(delta);
         balls.act(delta);
-
-        ballVelocity.setText("Ball Velocity: " + ((ActorBall) balls.findActor("ball")).getVelocity().len());
     }
 
     private void moveComputerPlayers(float delta) {
@@ -170,6 +174,7 @@ public class GameManager extends Actor {
                     ((ActorBall) ball).speedUpBall();
                     ((ActorBall) ball).reverseXVelocity();
                     ((ActorBall) ball).applyFriction(-((ActorPlayer) player).getDeltaPositionY() * friction);
+                    ((ActorBall) ball).applyCurvature(((ActorPlayer) player), curvatureConstant);
                 }
             }
 

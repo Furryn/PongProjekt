@@ -16,10 +16,10 @@ public final class REFERENCE {
     public static final float ASPECT_RATIO = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics.getHeight();
 
     // Actor-Data
-    public static final float PLAYER1_SIZE_X = GAME_WORLD_WIDTH / 100;
-    public static final float PLAYER1_SIZE_Y = PLAYER1_SIZE_X * 20;
+    public static final float PLAYER1_SIZE_X = GAME_WORLD_WIDTH / 50;
+    public static final float PLAYER1_SIZE_Y = PLAYER1_SIZE_X * 10;
 
-    public static final float PLAYER2_SIZE_X = GAME_WORLD_WIDTH / 100;
+    public static final float PLAYER2_SIZE_X = GAME_WORLD_WIDTH / 50;
     public static final float PLAYER2_SIZE_Y = PLAYER2_SIZE_X * 10;
 
     public static final float PLAYER1_DEF_VELOCITY = GAME_WORLD_HEIGHT / 2;
@@ -30,5 +30,11 @@ public final class REFERENCE {
 
     public static final Vector2 BALL_DEF_POS = new Vector2(GAME_WORLD_WIDTH / 2, GAME_WORLD_HEIGHT / 2);
     public static final Vector2 BALL_DEF_VELOCITY = new Vector2(-500, 50);
-    public static final float BALL_DEF_SIZE = GAME_WORLD_WIDTH / 100;
+    public static final float BALL_DEF_SIZE = GAME_WORLD_WIDTH / 25;
+
+    public final class TEXTURES {
+        public static final String BALL = "bacteria.png";
+        public static final String PLAYER = "syringe.png";
+        public static final String BACKGROUND = "background.png";
+    }
 }

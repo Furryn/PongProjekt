@@ -1,23 +1,27 @@
 package com.grutschus.pong.actors;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.grutschus.pong.Pong;
+import com.grutschus.pong.REFERENCE;
 
 /**
  * Created by Till on 30.09.2016
  * Class Description:
  * Class describing the Players
  */
-public class ActorPlayer extends Actor{
+public class ActorPlayer extends Actor {
 
     private ShapeRenderer bat;
     private Rectangle boundingRectangle;
+    private Sprite texture;
     private Vector2 position;
     private Vector2[] positionHistory;
     private float sizeX;
@@ -29,23 +33,27 @@ public class ActorPlayer extends Actor{
 
     /**
      * Constructor for a ActorPlayer-Object with given values
-     * @param pos Default position of the new player
-     * @param sizeX Size in x-direction of the new player
-     * @param sizeY Size in y-direction of the new player
-     * @param velocity Default velocity of the new player
+     *
+     * @param pos        Default position of the new player
+     * @param sizeX      Size in x-direction of the new player
+     * @param sizeY      Size in y-direction of the new player
+     * @param velocity   Default velocity of the new player
      * @param controlled Player or AI control
      */
-    public ActorPlayer(Vector2 pos, float sizeX, float sizeY, float velocity, boolean controlled)
-    {
+    public ActorPlayer(Vector2 pos, float sizeX, float sizeY, float velocity, boolean controlled) {
         this.bat = new ShapeRenderer();
         this.positionHistory = new Vector2[2];
-        this.positionHistory[0]  = pos.cpy();
+        this.positionHistory[0] = pos.cpy();
         this.position = pos;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.velocity = velocity;
         this.controlled = controlled;
         this.boundingRectangle = new Rectangle(this.position.x, this.position.y, this.sizeX, this.sizeY);
+        this.texture = new Sprite(new Texture(REFERENCE.TEXTURES.PLAYER));
+
+        // Resize texture
+        this.texture.setSize(this.sizeX, this.sizeY);
 
         setBounds(this.position.x, this.position.y, sizeX, sizeY);
         setVisible(true);
@@ -53,13 +61,15 @@ public class ActorPlayer extends Actor{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.end();
+        texture.setPosition(position.x, position.y);
+        texture.draw(batch);
+        /*batch.end();
         bat.begin(ShapeRenderer.ShapeType.Filled);
         bat.setColor(Color.WHITE);
         bat.rect(this.position.x, this.position.y, sizeX, sizeY);
         bat.setProjectionMatrix(Pong.getStageGame().getCamera().combined);
         bat.end();
-        batch.begin();
+        batch.begin();*/
     }
 
     @Override
@@ -71,6 +81,7 @@ public class ActorPlayer extends Actor{
 
     /**
      * Returns whether this is controlled by a human
+     *
      * @return boolean
      */
     public boolean isControlled() {
@@ -79,6 +90,7 @@ public class ActorPlayer extends Actor{
 
     /**
      * Gets the Bounding Rectangle of the player. Used for hit detection.
+     *
      * @return Rectangle
      */
     public Rectangle getBoundingRectangle() {
@@ -87,6 +99,7 @@ public class ActorPlayer extends Actor{
 
     /**
      * Gets the current score of the player
+     *
      * @return int
      */
     public int getScore() {
@@ -95,6 +108,7 @@ public class ActorPlayer extends Actor{
 
     /**
      * Sets the score of the player
+     *
      * @param score New score
      */
     public void setScore(int score) {
@@ -104,8 +118,7 @@ public class ActorPlayer extends Actor{
     /**
      * Increments the score of the player by 1
      */
-    public void incrementScore()
-    {
+    public void incrementScore() {
         this.score++;
     }
 
@@ -127,6 +140,11 @@ public class ActorPlayer extends Actor{
         return position.y;
     }
 
+    public Vector2 getPosition()
+    {
+        return position;
+    }
+
     @Override
     public float getHeight() {
         return sizeY;
@@ -136,8 +154,7 @@ public class ActorPlayer extends Actor{
         return positionHistory;
     }
 
-    public float getDeltaPositionY()
-    {
+    public float getDeltaPositionY() {
         return positionHistory[1].y - positionHistory[0].y;
     }
 }
