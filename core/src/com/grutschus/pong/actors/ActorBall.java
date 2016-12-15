@@ -1,7 +1,5 @@
 package com.grutschus.pong.actors;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,7 +7,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.grutschus.pong.Pong;
 import com.grutschus.pong.REFERENCE;
 
 import static java.lang.Math.abs;
@@ -85,9 +82,6 @@ public class ActorBall extends Actor {
         this.velocity.y = -this.velocity.y;
     }
 
-    public void reverseXVelocity() {
-        this.velocity.x = -this.velocity.x;
-    }
 
     public Rectangle getBoundingRectangle() {
         return boundingRectangle;
@@ -112,30 +106,25 @@ public class ActorBall extends Actor {
         return size;
     }
 
-    public void applyFriction(float amount) {
-        tempVector2.set(velocity.cpy());
-        float len = tempVector2.len2();
-        tempVector2.y = tempVector2.y + amount;
-        tempVector2.setLength2(len);
-        if (!(abs(tempVector2.angle(Vector2.Y)) > 160) && !(abs(tempVector2.angle(Vector2.Y)) < 20))
-            velocity.set(tempVector2.cpy());
-    }
-
     public Vector2 getVelocity() {
         return velocity;
     }
 
-    public void applyCurvature(ActorPlayer player, float curvature) {
-        float distance = ((player.getPosition().y + player.getHeight() / 2) - (this.getY() + this.getHeight() / 2));
-        distance = distance / (player.getHeight() / 2); // Relative to height
+    public void applyPhysics(ActorPlayer player) {
+        float distance = (player.getY() + player.getHeight() / 2) - getY();
+        distance = abs(distance / (player.getHeight() / 2));
 
+        float angle = velocity.angle();
         tempVector2.set(velocity.cpy());
-        float len = tempVector2.len2();
-        tempVector2.y = tempVector2.y + distance * curvature;
-        tempVector2.setLength2(len);
+        tempVector2.x = -tempVector2.x;
+        float angle2 = tempVector2.angle();
 
-        if (!(abs(tempVector2.angle(Vector2.Y)) > 160) && !(abs(tempVector2.angle(Vector2.Y)) < 20))
-            velocity.set(tempVector2.cpy());
+        float deltaAngle = angle2 - angle;
+
+        if (distance < 0.25) {
+            velocity.rotate(deltaAngle);
+        } else {
+            velocity.rotate(180);
+        }
     }
-
 }

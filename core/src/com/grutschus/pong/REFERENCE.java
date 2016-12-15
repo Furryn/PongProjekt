@@ -29,7 +29,7 @@ public final class REFERENCE {
     public static final Vector2 PLAYER2_DEF_POS = new Vector2(GAME_WORLD_WIDTH - (10 + PLAYER2_SIZE_X), GAME_WORLD_HEIGHT / 2);
 
     public static final Vector2 BALL_DEF_POS = new Vector2(GAME_WORLD_WIDTH / 2, GAME_WORLD_HEIGHT / 2);
-    public static final Vector2 BALL_DEF_VELOCITY = new Vector2(-500, 50);
+    public static final Vector2 BALL_DEF_VELOCITY = new Vector2(-500, 100);
     public static final float BALL_DEF_SIZE = GAME_WORLD_WIDTH / 25;
 
     public final class TEXTURES {

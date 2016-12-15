@@ -172,9 +172,7 @@ public class GameManager extends Actor {
                 if (((ActorBall) ball).getBoundingRectangle().overlaps(((ActorPlayer) player).getBoundingRectangle())) // Some ball hit some paddle
                 {
                     ((ActorBall) ball).speedUpBall();
-                    ((ActorBall) ball).reverseXVelocity();
-                    ((ActorBall) ball).applyFriction(-((ActorPlayer) player).getDeltaPositionY() * friction);
-                    ((ActorBall) ball).applyCurvature(((ActorPlayer) player), curvatureConstant);
+                    ((ActorBall) ball).applyPhysics((ActorPlayer) player);
                 }
             }
 
