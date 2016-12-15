@@ -2,6 +2,7 @@ package com.grutschus.pong;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -28,6 +29,9 @@ public class GameManager extends Actor {
     private float friction = 20;
     private float curvatureConstant = 10;
     private Sprite background;
+
+    private Sound death = Gdx.audio.newSound(Gdx.files.internal(REFERENCE.SOUNDS.DEATH));
+    private Sound pong = Gdx.audio.newSound(Gdx.files.internal(REFERENCE.SOUNDS.PONG));
 
     public GameManager() {
         players = new Group();
@@ -110,6 +114,7 @@ public class GameManager extends Actor {
      * Resets the game
      */
     private void reset(ActorBall ball) {
+        death.play();
         ActorPlayer closestPlayer = null;
         for (Actor player : players.getChildren()) {
             if (closestPlayer == null)
@@ -173,6 +178,7 @@ public class GameManager extends Actor {
                 {
                     ((ActorBall) ball).speedUpBall();
                     ((ActorBall) ball).applyPhysics((ActorPlayer) player);
+                    pong.play();
                 }
             }
 

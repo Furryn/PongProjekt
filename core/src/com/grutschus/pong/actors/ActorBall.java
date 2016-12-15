@@ -88,7 +88,7 @@ public class ActorBall extends Actor {
     }
 
     public void speedUpBall() {
-        this.velocity.setLength(this.velocity.len() + 10);
+        this.velocity.setLength(this.velocity.len() + 30);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class ActorBall extends Actor {
 
         float deltaAngle = angle2 - angle;
 
-        if (distance < 0.25) {
+        if (distance < 0.75) {
             velocity.rotate(deltaAngle);
         } else {
             velocity.rotate(180);

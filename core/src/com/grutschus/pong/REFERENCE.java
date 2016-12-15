@@ -17,10 +17,10 @@ public final class REFERENCE {
 
     // Actor-Data
     public static final float PLAYER1_SIZE_X = GAME_WORLD_WIDTH / 50;
-    public static final float PLAYER1_SIZE_Y = PLAYER1_SIZE_X * 10;
+    public static final float PLAYER1_SIZE_Y = PLAYER1_SIZE_X * 7.5f;
 
     public static final float PLAYER2_SIZE_X = GAME_WORLD_WIDTH / 50;
-    public static final float PLAYER2_SIZE_Y = PLAYER2_SIZE_X * 10;
+    public static final float PLAYER2_SIZE_Y = PLAYER2_SIZE_X * 7.5f;
 
     public static final float PLAYER1_DEF_VELOCITY = GAME_WORLD_HEIGHT / 2;
     public static final float PLAYER2_DEF_VELOCITY = GAME_WORLD_HEIGHT / 2;
@@ -36,5 +36,10 @@ public final class REFERENCE {
         public static final String BALL = "bacteria.png";
         public static final String PLAYER = "syringe.png";
         public static final String BACKGROUND = "background.png";
+    }
+
+    public final class SOUNDS {
+        public static final String DEATH = "death.mp3";
+        public static final String PONG = "pong.wav";
     }
 }
