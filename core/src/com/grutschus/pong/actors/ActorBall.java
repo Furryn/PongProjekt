@@ -88,7 +88,7 @@ public class ActorBall extends Actor {
     }
 
     public void speedUpBall() {
-        this.velocity.setLength(this.velocity.len() + 30);
+        this.velocity.setLength(this.velocity.len() + 50);
     }
 
     @Override

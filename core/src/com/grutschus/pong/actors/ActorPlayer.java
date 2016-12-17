@@ -28,6 +28,7 @@ public class ActorPlayer extends Actor {
     private float sizeY;
     private float velocity;
     private int score;
+    private int upKeyCode, downKeyCode;
     private boolean controlled;
 
 
@@ -40,7 +41,7 @@ public class ActorPlayer extends Actor {
      * @param velocity   Default velocity of the new player
      * @param controlled Player or AI control
      */
-    public ActorPlayer(Vector2 pos, float sizeX, float sizeY, float velocity, boolean controlled) {
+    public ActorPlayer(Vector2 pos, float sizeX, float sizeY, float velocity, boolean controlled, int upKeyCode, int downKeyCode) {
         this.bat = new ShapeRenderer();
         this.positionHistory = new Vector2[2];
         this.positionHistory[0] = pos.cpy();
@@ -51,6 +52,8 @@ public class ActorPlayer extends Actor {
         this.controlled = controlled;
         this.boundingRectangle = new Rectangle(this.position.x, this.position.y, this.sizeX, this.sizeY);
         this.texture = new Sprite(new Texture(REFERENCE.TEXTURES.PLAYER));
+        this.upKeyCode = upKeyCode;
+        this.downKeyCode = downKeyCode;
 
         // Resize texture
         this.texture.setSize(this.sizeX, this.sizeY);
@@ -156,5 +159,26 @@ public class ActorPlayer extends Actor {
 
     public float getDeltaPositionY() {
         return positionHistory[1].y - positionHistory[0].y;
+    }
+
+    public void setUpKeyCode(int i)
+    {
+        this.upKeyCode = i;
+    }
+
+
+    public void setDownKeyCode(int i)
+    {
+        this.downKeyCode = i;
+    }
+
+    public int getUpKeyCode()
+    {
+        return this.upKeyCode;
+    }
+
+    public int getDownKeyCode()
+    {
+        return this.downKeyCode;
     }
 }

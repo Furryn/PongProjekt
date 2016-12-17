@@ -102,9 +102,9 @@ public class GameManager extends Actor {
     private void moveHumanPlayers(float delta) {
         for (Actor player : players.getChildren()) {
             if (((ActorPlayer) player).isControlled()) {
-                if (isPressed[Input.Keys.W] && player.getY() < REFERENCE.GAME_WORLD_HEIGHT - player.getHeight())
+                if (isPressed[((ActorPlayer) player).getUpKeyCode()] && player.getY() < REFERENCE.GAME_WORLD_HEIGHT - player.getHeight())
                     ((ActorPlayer) player).moveUp(delta);
-                if (isPressed[Input.Keys.S] && player.getY() > 0)
+                if (isPressed[((ActorPlayer) player).getDownKeyCode()] && player.getY() > 0)
                     ((ActorPlayer) player).moveDown(delta);
             }
         }
@@ -210,8 +210,8 @@ public class GameManager extends Actor {
      * @param controlled Player or AI control
      * @param name       The ID of the new player
      */
-    public void addPlayer(Vector2 pos, float sizeX, float sizeY, float velocity, boolean controlled, String name) {
-        addPlayer(new ActorPlayer(pos, sizeX, sizeY, velocity, controlled), name);
+    public void addPlayer(Vector2 pos, float sizeX, float sizeY, float velocity, boolean controlled, String name, int upKeyCode, int downKeyCode) {
+        addPlayer(new ActorPlayer(pos, sizeX, sizeY, velocity, controlled, upKeyCode, downKeyCode), name);
     }
 
     /**

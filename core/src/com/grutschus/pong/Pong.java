@@ -3,6 +3,7 @@ package com.grutschus.pong;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -52,14 +53,18 @@ public class Pong extends ApplicationAdapter {
                 REFERENCE.PLAYER1_SIZE_Y,
                 REFERENCE.PLAYER1_DEF_VELOCITY,
                 true,
-                "player");
+                "player",
+                Input.Keys.W,
+                Input.Keys.S);
 
         gameManager.addPlayer(REFERENCE.PLAYER2_DEF_POS,
                 REFERENCE.PLAYER2_SIZE_X,
                 REFERENCE.PLAYER2_SIZE_Y,
                 REFERENCE.PLAYER2_DEF_VELOCITY,
-                false,
-                "computer");
+                true,
+                "computer",
+                Input.Keys.UP,
+                Input.Keys.DOWN);
 
         gameManager.addBall("ball");
 
