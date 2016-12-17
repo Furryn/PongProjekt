@@ -1,7 +1,6 @@
 package com.grutschus.pong;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -26,9 +25,11 @@ public class GameManager extends Actor {
     private boolean[] isPressed = new boolean[256];
     private Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
     private Label counter = new Label("0:0", skin);
+    private Label pause = new Label("PAUSED!", skin);
     private float friction = 20;
     private float curvatureConstant = 10;
     private Sprite background;
+    private boolean isPaused = false;
 
     private Sound death = Gdx.audio.newSound(Gdx.files.internal(REFERENCE.SOUNDS.DEATH));
     private Sound pong = Gdx.audio.newSound(Gdx.files.internal(REFERENCE.SOUNDS.PONG));
@@ -39,6 +40,7 @@ public class GameManager extends Actor {
         uiElements = new Group();
         addUiElement(new Table(skin), "rootTable");
         addUiElement(counter, "counter");
+        addUiElement(pause, "pause");
 
         background = new Sprite(new Texture(REFERENCE.TEXTURES.BACKGROUND));
         background.setSize(REFERENCE.GAME_WORLD_WIDTH, REFERENCE.GAME_WORLD_HEIGHT);
@@ -56,7 +58,10 @@ public class GameManager extends Actor {
         getRootTable().top();
         getRootTable().add(counter);
         getRootTable().row();
+        getRootTable().add(pause);
         counter.setFontScale(2);
+        pause.setFontScale(3);
+        pause.setVisible(isPaused);
     }
 
     @Override
@@ -68,11 +73,13 @@ public class GameManager extends Actor {
 
     @Override
     public void act(float delta) {
-        handleCollision();
-        moveHumanPlayers(delta);
-        moveComputerPlayers(delta);
-        players.act(delta);
-        balls.act(delta);
+        if (!isPaused) {
+            handleCollision();
+            moveHumanPlayers(delta);
+            moveComputerPlayers(delta);
+            players.act(delta);
+            balls.act(delta);
+        }
     }
 
     private void moveComputerPlayers(float delta) {
@@ -159,6 +166,35 @@ public class GameManager extends Actor {
      * @param keycode The keycode of the pessed key
      */
     private void handleKeyDown(Event event, int keycode) {
+        switch (keycode) {
+            case REFERENCE.KEY_SETTINGS.KI_SWITCH:
+                switchKi();
+                break;
+            case REFERENCE.KEY_SETTINGS.PAUSE:
+                pause();
+                break;
+            case REFERENCE.KEY_SETTINGS.RESET:
+                for (Actor player : players.getChildren()) {
+                    ((ActorPlayer) player).setScore(0);
+                }
+                for (Actor ball : balls.getChildren()) {
+                    ((ActorBall) ball).reset();
+                }
+                counter.setText(((ActorPlayer) players.findActor("computer")).getScore()
+                        + ":" +
+                        ((ActorPlayer) players.findActor("player")).getScore());
+                break;
+        }
+    }
+
+    private void pause() {
+        isPaused = !isPaused;
+        pause.setVisible(isPaused);
+    }
+
+    private void switchKi() {
+        ActorPlayer ki = players.findActor("computer");
+        ki.setControlled(!ki.isControlled());
     }
 
     /**

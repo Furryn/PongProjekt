@@ -1,6 +1,7 @@
 package com.grutschus.pong;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -41,5 +42,11 @@ public final class REFERENCE {
     public final class SOUNDS {
         public static final String DEATH = "death.mp3";
         public static final String PONG = "pong.wav";
+    }
+
+    public final class KEY_SETTINGS {
+        public static final int PAUSE = Input.Keys.P;
+        public static final int KI_SWITCH = Input.Keys.O;
+        public static final int RESET = Input.Keys.R;
     }
 }

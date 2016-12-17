@@ -1,11 +1,9 @@
 package com.grutschus.pong.desktop;
 
 import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.grutschus.pong.Pong;
-import com.grutschus.pong.REFERENCE;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
